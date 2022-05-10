@@ -17,6 +17,7 @@
     justify-content: center;
     border: 1px solid pink;
     padding: 10px;
+    width: 300px;
 }
 
 .macbook__cart>img{
@@ -24,4 +25,39 @@
 }
 h2{
     text-align: center;
+}
+.macbook__cart p>:first-child{
+    font-size: 20px;
+    color: red;
+    font-weight: bold;
+}
+h3 + p{
+    font-size: 20px;
+    color: red;
+    font-weight: bold;
+}
+p + p{
+    border: 1px solid lightgray;
+    padding: 2px;
+    background-color: #F3F4F6;
+    border-radius: 5px;
+    text-align: center;
+}
+section{
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    padding: 10px 0;
+}
+button{
+    width: 100px;
+    height: 35px;
+    background-color: palevioletred;
+    color: #F3F4F6;
+    outline: none;
+    border: 1px solid lightblue;
+    border-radius: 10px;
+}
+button:active{
+    background-color: lightblue;
 }
