@@ -31,12 +31,21 @@ h2{
     color: red;
     font-weight: bold;
 }
-h3 + p{
+h3{
+    height: 100px;
+}
+.price{
+    font-size: 15px;
+    font-weight: bold;
+    text-decoration-line: line-through;
+    color: green;
+}
+.discountPrice{
     font-size: 20px;
     color: red;
     font-weight: bold;
 }
-p + p{
+.offer{
     border: 1px solid lightgray;
     padding: 2px;
     background-color: #F3F4F6;

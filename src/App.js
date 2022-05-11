@@ -1,4 +1,4 @@
-import React,{Component} from "react";
+import React, {Component} from "react";
 import "./assets/css/macbookStyle.css"
 // import React, { useState } from 'react';
 
@@ -23,7 +23,7 @@ import "./assets/css/macbookStyle.css"
 //         </div>
 //     );
 // }
-
+//khai báo giá trị bên trong đối tượng cần lọc
 
 // function App() {
 //     const [count, setCount] = useState(3);
@@ -42,11 +42,18 @@ class App extends Component {
         this.state ={
             items:[],
             isLoaded: false,
-            categoryID: 1,
+            categoryID: [],
         }
     }
 
     componentDidMount() {
+        fetch('https://625bcc9a398f3bc782aed2bb.mockapi.io/categories')
+            .then(res => res.json())
+            .then(json => {
+                this.setState({
+                    categoryID: json,
+                })
+            })
         fetch('https://625bcc9a398f3bc782aed2bb.mockapi.io/products')
             .then(res=> res.json())
             .then(json => {
@@ -56,7 +63,13 @@ class App extends Component {
                 })
             })
     }
+    clickHandler(title){
+        alert("Successfull order" + title)
+    }
 
+    discountCalculate(price, discountPrice){
+        return (price / discountPrice).toFixed(2) * 100
+    }
     render() {
         const {isLoaded, items, categoryID} = this.state;
 
@@ -67,19 +80,27 @@ class App extends Component {
             <div>
                 <h2>CHON LOAI HANG</h2>
                     <section>
-                        <button onClick={() => {this.setState({...this.state,categoryID: 1})}}>macbook</button>
-                        <button onClick={() => {this.setState({...this.state,categoryID: 3})}}>ipad</button>
-                        <button onClick={() => {this.setState({...this.state,categoryID: 2})}}>iphone</button>
+                        {/*{categoryID.map(ele =>{*/}
+                        {/*    return(*/}
+                        {/*        <button onClick={() => {this.setState({...this.state,{ele.cateID}: 1})}}>{ele.cateName}</button>*/}
+                        {/*    )*/}
+                        {/*})}*/}
+                        <button onClick={() => {this.setState({categoryID: 1})}}>macbook</button>
+                        <button onClick={() => {this.setState({categoryID: 3})}}>ipad</button>
+                        <button onClick={() => {this.setState({categoryID: 2})}}>iphone</button>
                     </section>
                 <div className="wrapper">
                     {items.filter(item => item.categoryID == categoryID)
                         .map(item =>{
                                 return(
-                                    <div className="macbook__cart">
+                                    <div className="macbook__cart" key = {item.id}>
                                         <img src={item.image} alt=""/>
+                                        <span>{() => this.discountCalculate(item.price,item.discountPrice)}</span>
                                         <h3>{item.title}</h3>
-                                        <p>{item.price}</p>
-                                        <p>{item.offer}</p>
+                                        <p className="price">{item.price}</p>
+                                        <p className="discountPrice">{item.discountPrice}</p>
+                                        <p className="offer">{item.offer}</p>
+                                        <button onClick={() => this.clickHandler(item.title)}>Buy now</button>
                                     </div>
                                 )
                             }
