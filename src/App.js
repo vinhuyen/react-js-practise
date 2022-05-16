@@ -148,121 +148,129 @@
 //
 // export default NameForm;
 
+//
+import React, {useState} from "react";
 
-// import React, {useState} from "react";
+
+const ControlledInputs = () => {
+    // const [firstName, setFirstName] = useState('');
+    // const [email, setEmail] = useState('');
+    // const [age, setAge] = useState('');
+
+    const [person, setPerson] = useState({firstName: '', email: '', age: ''});
+    const [people, setPeople] = useState([]);
+
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     if(firstName && email && age) {
+    //         const person = { id: new Date().getTime().toString(),
+    //         firstName, email, age};
+    //         console.log(person);
+    //         setPeople((people) => {
+    //             return [...people,person];
+    //         });
+    //         setFirstName('');
+    //         setEmail('');
+    //         setAge('')
+    //     }
+    //     else{
+    //         console.log('empty values');
+    //     }
+    // };
+    const handleChange = (e) => {
+        const name = e.target.name;
+        const value = e.target.value;
+        setPerson({...person,[name]:value})
+    };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if(person.firstName && person.email && person.age && person.movie){
+            const newPerson = {...person, id: new Date().getTime()
+                    .toString()}
+            setPeople(([...people, newPerson]))
+            setPerson({firstName: '', email: '', age: '', movie: ''})
+        }
+    };
+    return (
+        <article>
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <label htmlFor="firstName">Name : </label>
+                    <input type="text" id='firstName' name='firstName' value={person.firstName}
+                           onChange={handleChange}/>
+                </div>
+                <div>
+                    <label htmlFor="email">Email : </label>
+                    <input type="text" id='email' name='email' value={person.email}
+                           onChange={handleChange}/>
+                </div>
+                <div>
+                    <label htmlFor="age">Age : </label>
+                    <input type="text" id='age' name='age' value={person.age}
+                           onChange={handleChange}/>
+                </div>
+                <div>
+                    <label htmlFor="movie">Movie:</label>
+                    <select name="movie" id="movie" value={person.movie} onChange={handleChange}>
+                        <option value="doctorStrange">Doctor Strange</option>
+                        <option value="doctorDzinhYen">Doctor Dzinh Yen</option>
+                        <option value="doctorThanhVu">Doctor Thanh Vu</option>
+                    </select>
+                </div>
+                <button type='submit'>add person</button>
+            </form>
+            {people.map((person, index) => {
+                const {id, firstName, email, age, movie} = person;
+                return (
+                    <div className='item' key={id}>
+                        <h4>{firstName}</h4>
+                        <p>{email}</p>
+                        <p>{age}</p>
+                        <p>{movie}</p>
+                    </div>
+                )
+            })}
+        </article>
+
+    )
+}
+
+export default ControlledInputs;
+
 //
+// import React, {Component} from 'react';
 //
-// const ControlledInputs = () => {
-//     // const [firstName, setFirstName] = useState('');
-//     // const [email, setEmail] = useState('');
-//     // const [age, setAge] = useState('');
-//
-//     const [person, setPerson] = useState({firstName: '', email: '', age: ''});
-//     const [people, setPeople] = useState([]);
-//
-//     // const handleSubmit = (e) => {
-//     //     e.preventDefault();
-//     //     if(firstName && email && age) {
-//     //         const person = { id: new Date().getTime().toString(),
-//     //         firstName, email, age};
-//     //         console.log(person);
-//     //         setPeople((people) => {
-//     //             return [...people,person];
-//     //         });
-//     //         setFirstName('');
-//     //         setEmail('');
-//     //         setAge('')
-//     //     }
-//     //     else{
-//     //         console.log('empty values');
-//     //     }
-//     // };
-//     const handleChange = (e) => {
-//         const name = e.target.name;
-//         const value = e.target.value;
-//         setPerson({...person,[name]:value})
-//     };
-//     const handleSubmit = (e) => {
-//         e.preventDefault();
-//         if(person.firstName && person.email && person.age){
-//             const newPerson = {...person, id: new Date().getTime()
-//                     .toString()}
-//             setPeople(([...people, newPerson]))
-//             setPerson({firstName: '', email: '', age: ''})
+// class App extends Component {
+//     constructor(props) {
+//         super(props);
+//         this.state = {
+//             data: 'Initial data...'
 //         }
+//         this.updateState = this.updateState.bind(this);
 //     };
-//     return (
-//         <article>
-//             <form onSubmit={handleSubmit}>
-//                 <div>
-//                     <label htmlFor="firstName">Name : </label>
-//                     <input type="text" id='firstName' name='firstName' value={person.firstName}
-//                            onChange={handleChange}/>
-//                 </div>
-//                 <div>
-//                     <label htmlFor="email">Email : </label>
-//                     <input type="text" id='email' name='email' value={person.email}
-//                            onChange={handleChange}/>
-//                 </div>
-//                 <div>
-//                     <label htmlFor="email">Age : </label>
-//                     <input type="text" id='age' name='age' value={person.age}
-//                            onChange={handleChange}/>
-//                 </div>
-//                 <button type='submit'>add person</button>
-//             </form>
-//             {people.map((person, index) => {
-//                 const {id, firstName, email, age} = person;
-//                 return (
-//                     <div className='item' key={id}>
-//                         <h4>{firstName}</h4>
-//                         <p>{email}</p>
-//                         <p>{age}</p>
-//                     </div>
-//                 )
-//             })}
-//         </article>
-//
-//     )
+//     updateState(e){
+//         this.setState({data: e.target.value})
+//     }
+//     render() {
+//         return (
+//             <div>
+//                 <Content myDataProp = {this.state.data}
+//                 updateStateProp = {this.updateState}/>
+//             </div>
+//         );
+//     }
 // }
 //
-// export default ControlledInputs;
-
-
-import React, {Component} from 'react';
-import ReactDOM from "react-dom";
-
-class App extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            data: 'Initial data...'
-        }
-        this.updateState = this.updateState.bind(this);
-    };
-    updateState(e){
-        this.setState({data: e.target.value})
-    }
-    render() {
-        return (
-            <div>
-                <Content myDataProp = {this.state.data}
-                updateStateProp = {this.updateState()}>fhg</Content>
-            </div>
-        );
-    }
-}
-
-class Content extends Component {
-    render() {
-        return (
-            <div>
-                <input type="text" value = {this.props.myDataProp}
-                onChange={this.props.updateStateProp}/>
-                <h3>{this.props.myDataProp}</h3>
-            </div>
-        );
-    }
-}
-ReactDOM.render(<App/>, document.getElementById('app'))
-export default App;
+// class Content extends Component {
+//     render() {
+//         return (
+//             <div>
+//                 <input type="text" value = {this.props.myDataProp}
+//                 onChange={this.props.updateStateProp}/>
+//                 <h3>{this.props.myDataProp}</h3>
+//             </div>
+//         );
+//     }
+// }
+//
+// export default App;
